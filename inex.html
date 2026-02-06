@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>La Trasformazione di Marco</title>
+    <style>
+        body {
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: radial-gradient(circle, #ffcc00, #ff6600);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow: hidden;
+            color: white;
+        }
+
+        #stage {
+            position: relative;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        #stage:hover {
+            transform: scale(1.05);
+        }
+
+        /* Stile Immagini */
+        .personaggio {
+            width: 350px;
+            height: auto;
+            display: block;
+            border-bottom: 5px solid rgba(0,0,0,0.2);
+        }
+
+        /* Etichette dinamiche */
+        .label {
+            position: absolute;
+            width: 100%;
+            text-align: center;
+            font-weight: 900;
+            text-shadow: 2px 2px 0px #000;
+            pointer-events: none;
+            text-transform: uppercase;
+        }
+
+        .nome-maglietta {
+            top: 55%;
+            font-size: 1.2rem;
+            color: #fff;
+        }
+
+        .nome-super {
+            top: 45%;
+            font-size: 2rem;
+            color: #f1c40f;
+            display: none; /* Nascosto all'inizio */
+        }
+
+        /* Animazione Flash di trasformazione */
+        .flash {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: white;
+            opacity: 0;
+            pointer-events: none;
+            z-index: 10;
+        }
+
+        .animate-flash {
+            animation: flashEffect 0.5s ease-out;
+        }
+
+        @keyframes flashEffect {
+            0% { opacity: 0; }
+            50% { opacity: 1; }
+            100% { opacity: 0; }
+        }
+
+        h2 { margin-bottom: 20px; text-shadow: 2px 2px 4px rgba(0,0,0,0.5); }
+    </style>
+</head>
+<body>
+
+    <h2 id="titolo">Clicca su Marco per attivare il Super Potere!</h2>
+
+    <div id="stage" onclick="trasforma()">
+        <div id="stato-samba">
+            <img src="ballerino.gif" alt="Marco Samba" class="personaggio">
+            <div class="label nome-maglietta">Marco Ciola</div>
+        </div>
+
+        <div id="stato-super" style="display: none;">
+            <img src="supereroe.png" alt="Super Marco" class="personaggio">
+            <div class="label nome-super">SUPER MARCO CIOLA</div>
+        </div>
+    </div>
+
+    <div id="flash-overlay" class="flash"></div>
+
+    <script>
+        function trasforma() {
+            const flash = document.getElementById('flash-overlay');
+            const samba = document.getElementById('stato-samba');
+            const superMarco = document.getElementById('stato-super');
+            const titolo = document.getElementById('titolo');
+
+            // Attiva il flash bianco
+            flash.classList.add('animate-flash');
+
+            // Cambia l'immagine a metà dell'effetto flash
+            setTimeout(() => {
+                samba.style.display = 'none';
+                superMarco.style.display = 'block';
+                titolo.innerText = "IL MONDO È AL SICURO ORA!";
+                document.body.style.background = "radial-gradient(circle, #0052D4, #4364F7, #6FB1FC)";
+            }, 250);
+
+            // Rimuove la classe flash per poterlo rifare
+            setTimeout(() => {
+                flash.classList.remove('animate-flash');
+            }, 500);
+        }
+    </script>
+</body>
+</html>
